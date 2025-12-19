@@ -132,10 +132,17 @@ get_header('green-office');
             <h2 class="section-title">ข่าวสารและกิจกรรม</h2>
             <div class="activities-grid">
                 <?php
+                // Pagination - use 'page' for page templates
+                $paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
+                if ( $paged == 1 ) {
+                    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+                }
+                
                 // Query posts from 'green-office' category
                 $go_posts = new WP_Query( array(
                     'post_type'      => 'post',
-                    'posts_per_page' => 3,
+                    'posts_per_page' => 6,
+                    'paged'          => $paged,
                     'orderby'        => 'date',
                     'order'          => 'DESC',
                     'category_name'  => 'green-office',
@@ -161,7 +168,30 @@ get_header('green-office');
                     </div>
                 <?php
                     endwhile;
-                    wp_reset_postdata();
+                ?>
+            </div>
+            
+            <?php
+            // Pagination
+            $total_pages = $go_posts->max_num_pages;
+            if ( $total_pages > 1 ) :
+                $big = 999999999;
+            ?>
+                <div class="posts-pagination">
+                    <?php
+                    echo paginate_links( array(
+                        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                        'format'    => '?paged=%#%',
+                        'current'   => max( 1, $paged ),
+                        'total'     => $total_pages,
+                        'prev_text' => '&laquo; ก่อนหน้า',
+                        'next_text' => 'ถัดไป &raquo;',
+                    ) );
+                    ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php wp_reset_postdata();
                 else :
                 ?>
                     <div class="no-posts-message">
@@ -169,7 +199,6 @@ get_header('green-office');
                         <p class="small-text">สร้างโพสต์ใหม่และเพิ่มในหมวดหมู่ "green-office"</p>
                     </div>
                 <?php endif; ?>
-            </div>
         </div>
     </section>
 

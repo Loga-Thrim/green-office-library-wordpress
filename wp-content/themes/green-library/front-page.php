@@ -87,10 +87,17 @@ get_header();
     if ( $graph_cat ) $exclude_cats[] = $graph_cat->term_id;
     if ( $graph_cat_th ) $exclude_cats[] = $graph_cat_th->term_id;
     
+    // Pagination - use 'page' for static front page, 'paged' for others
+    $paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
+    if ( $paged == 1 ) {
+        $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+    }
+    
     // Query posts from 'main' category, excluding 'graph'
     $latest_posts = new WP_Query( array(
         'post_type'        => 'post',
         'posts_per_page'   => 6,
+        'paged'            => $paged,
         'orderby'          => 'date',
         'order'            => 'DESC',
         'category_name'    => 'main',
@@ -140,9 +147,31 @@ get_header();
                     
                     <?php
                 endwhile;
-                wp_reset_postdata();
                 ?>
             </div>
+            
+            <?php
+            // Pagination
+            $total_pages = $latest_posts->max_num_pages;
+            if ( $total_pages > 1 ) :
+                // Build pagination base URL for front page
+                $big = 999999999;
+            ?>
+                <div class="posts-pagination">
+                    <?php
+                    echo paginate_links( array(
+                        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                        'format'    => '?paged=%#%',
+                        'current'   => max( 1, $paged ),
+                        'total'     => $total_pages,
+                        'prev_text' => '&laquo; ก่อนหน้า',
+                        'next_text' => 'ถัดไป &raquo;',
+                    ) );
+                    ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php wp_reset_postdata(); ?>
         </section>
         <?php
     endif;

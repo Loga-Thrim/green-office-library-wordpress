@@ -91,10 +91,17 @@ get_header('green-library-sub');
             
             <div class="gl-news-grid">
                 <?php
+                // Pagination - use 'page' for page templates
+                $paged = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
+                if ( $paged == 1 ) {
+                    $paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+                }
+                
                 // Query posts from 'green-library' category
                 $gl_posts = new WP_Query( array(
                     'post_type'      => 'post',
-                    'posts_per_page' => 4,
+                    'posts_per_page' => 6,
+                    'paged'          => $paged,
                     'orderby'        => 'date',
                     'order'          => 'DESC',
                     'category_name'  => 'green-library',
@@ -103,13 +110,13 @@ get_header('green-library-sub');
                 if ( $gl_posts->have_posts() ) :
                     $post_index = 0;
                     while ( $gl_posts->have_posts() ) : $gl_posts->the_post();
-                        $card_class = ($post_index === 0) ? 'gl-news-card gl-news-featured' : 'gl-news-card';
+                        $card_class = ($post_index === 0 && $paged === 1) ? 'gl-news-card gl-news-featured' : 'gl-news-card';
                 ?>
                     <article class="<?php echo $card_class; ?>">
                         <?php if ( has_post_thumbnail() ) : ?>
                             <div class="gl-news-image">
                                 <a href="<?php the_permalink(); ?>">
-                                    <?php the_post_thumbnail( ($post_index === 0) ? 'large' : 'medium' ); ?>
+                                    <?php the_post_thumbnail( ($post_index === 0 && $paged === 1) ? 'large' : 'medium' ); ?>
                                 </a>
                                 <span class="gl-news-date-badge"><?php echo get_the_date( 'j M' ); ?></span>
                             </div>
@@ -118,7 +125,7 @@ get_header('green-library-sub');
                             <h3 class="gl-news-card-title">
                                 <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                             </h3>
-                            <?php if ($post_index === 0) : ?>
+                            <?php if ($post_index === 0 && $paged === 1) : ?>
                                 <p class="gl-news-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 30 ); ?></p>
                             <?php endif; ?>
                             <a href="<?php the_permalink(); ?>" class="gl-news-readmore">อ่านต่อ →</a>
@@ -127,7 +134,30 @@ get_header('green-library-sub');
                 <?php
                         $post_index++;
                     endwhile;
-                    wp_reset_postdata();
+                ?>
+            </div>
+            
+            <?php
+            // Pagination
+            $total_pages = $gl_posts->max_num_pages;
+            if ( $total_pages > 1 ) :
+                $big = 999999999;
+            ?>
+                <div class="posts-pagination">
+                    <?php
+                    echo paginate_links( array(
+                        'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                        'format'    => '?paged=%#%',
+                        'current'   => max( 1, $paged ),
+                        'total'     => $total_pages,
+                        'prev_text' => '&laquo; ก่อนหน้า',
+                        'next_text' => 'ถัดไป &raquo;',
+                    ) );
+                    ?>
+                </div>
+            <?php endif; ?>
+            
+            <?php wp_reset_postdata();
                 else :
                 ?>
                     <div class="no-posts-message">
@@ -135,7 +165,6 @@ get_header('green-library-sub');
                         <p class="small-text">สร้างโพสต์ใหม่และเพิ่มในหมวดหมู่ "green-library"</p>
                     </div>
                 <?php endif; ?>
-            </div>
         </div>
     </section>
 

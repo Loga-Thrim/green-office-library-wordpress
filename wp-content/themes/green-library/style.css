@@ -2925,3 +2925,73 @@ img.gl-main-image {
         height: 280px;
     }
 }
+
+/* Posts Pagination */
+.posts-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem 0;
+    flex-wrap: wrap;
+}
+
+.posts-pagination a,
+.posts-pagination span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 0.75rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.posts-pagination a {
+    background: var(--white);
+    color: var(--primary-green);
+    border: 1px solid var(--light-green);
+}
+
+.posts-pagination a:hover {
+    background: var(--primary-green);
+    color: var(--white);
+    border-color: var(--primary-green);
+}
+
+.posts-pagination .current {
+    background: var(--primary-green);
+    color: var(--white);
+    border: 1px solid var(--primary-green);
+}
+
+.posts-pagination .dots {
+    background: transparent;
+    border: none;
+    color: #666;
+}
+
+.posts-pagination .prev,
+.posts-pagination .next {
+    padding: 0 1rem;
+}
+
+@media (max-width: 576px) {
+    .posts-pagination a,
+    .posts-pagination span {
+        min-width: 36px;
+        height: 36px;
+        padding: 0 0.5rem;
+        font-size: 0.85rem;
+    }
+    
+    .posts-pagination .prev,
+    .posts-pagination .next {
+        padding: 0 0.75rem;
+    }
+}
