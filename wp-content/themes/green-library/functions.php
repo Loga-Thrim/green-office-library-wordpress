@@ -270,6 +270,24 @@ function green_library_customize_register( $wp_customize ) {
         'priority' => 41,
     ) );
     
+    // Green Library Map & Info Section
+    $wp_customize->add_section( 'green_library_map_info', array(
+        'title'    => __( '[Green Library] Map & Info', 'green-library' ),
+        'priority' => 42,
+    ) );
+    
+    $wp_customize->add_setting( 'green_library_info_iframe', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ) );
+    
+    $wp_customize->add_control( 'green_library_info_iframe', array(
+        'label'       => __( 'Iframe URL', 'green-library' ),
+        'description' => __( 'URL สำหรับ iframe (รองรับ Facebook Page, Google Sheets, Power BI ฯลฯ)', 'green-library' ),
+        'section'     => 'green_library_map_info',
+        'type'        => 'url',
+    ) );
+    
     // Green Library Carousel Images (up to 5 slides)
     for ( $i = 1; $i <= 5; $i++ ) {
         // Image setting
@@ -396,6 +414,24 @@ function green_library_customize_register( $wp_customize ) {
             'type'     => 'url',
         ) );
     }
+    
+    // Green Office Map & Info Section
+    $wp_customize->add_section( 'green_office_map_info', array(
+        'title'    => __( '[Green Office] Map & Info', 'green-library' ),
+        'priority' => 52,
+    ) );
+    
+    $wp_customize->add_setting( 'green_office_info_iframe', array(
+        'default'           => '',
+        'sanitize_callback' => 'esc_url_raw',
+    ) );
+    
+    $wp_customize->add_control( 'green_office_info_iframe', array(
+        'label'       => __( 'Iframe URL', 'green-library' ),
+        'description' => __( 'URL สำหรับ iframe (รองรับ Facebook Page, Google Sheets, Power BI ฯลฯ)', 'green-library' ),
+        'section'     => 'green_office_map_info',
+        'type'        => 'url',
+    ) );
     
     // Green Office Results - Dynamic Years from Pages
     // Get all pages using the "Green Office Results" template

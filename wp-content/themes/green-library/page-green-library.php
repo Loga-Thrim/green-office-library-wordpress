@@ -138,6 +138,67 @@ get_header('green-library-sub');
             </div>
         </div>
     </section>
+
+    <!-- Map & Info Section -->
+    <section class="map-info-section gl-map-info">
+        <div class="gl-news-container">
+            <div class="map-info-grid">
+                <div class="map-column">
+                                        <div class="map-wrapper">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3818.9280624215176!2d100.2050317!3d16.8299245!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30dfbcdc9210c3b9%3A0xd94f7b25d31d38b6!2z4Liq4Liz4LiZ4Lix4LiB4Lin4Li04LiX4Lii4Lia4Lij4Li04LiB4Liy4Lij4LmB4Lil4Liw4LmA4LiX4LiE4LmC4LiZ4LmC4Lil4Lii4Li14Liq4Liy4Lij4Liq4LiZ4LmA4LiX4LioIOC4oeC4q-C4suC4p-C4tOC4l-C4ouC4suC4peC4seC4ouC4o-C4suC4iuC4oOC4seC4j-C4nuC4tOC4muC4ueC4peC4quC4h-C4hOC4o-C4suC4oQ!5e0!3m2!1sth!2sth!4v1766115745020!5m2!1sth!2sth"
+                            width="100%" 
+                            height="500" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="info-column">
+                    <div class="info-wrapper">
+                        <?php 
+                        $iframe_url = get_theme_mod('green_library_info_iframe', '');
+                        if ($iframe_url) : 
+                            // Check if it's a Facebook URL
+                            $is_facebook = strpos($iframe_url, 'facebook.com') !== false;
+                            if ($is_facebook) : ?>
+                                <div class="fb-page-wrapper">
+                                    <iframe 
+                                        src="https://www.facebook.com/plugins/page.php?href=<?php echo urlencode($iframe_url); ?>&tabs=timeline&width=500&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true"
+                                        width="500" 
+                                        height="500" 
+                                        style="border:none;overflow:hidden" 
+                                        scrolling="no" 
+                                        frameborder="0" 
+                                        allowfullscreen="true" 
+                                        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                                    </iframe>
+                                </div>
+                            <?php else : ?>
+                                <div class="general-iframe-wrapper">
+                                    <iframe 
+                                        src="<?php echo esc_url($iframe_url); ?>"
+                                        width="100%" 
+                                        height="100%" 
+                                        style="border:none;" 
+                                        allowfullscreen="true" 
+                                        loading="lazy">
+                                    </iframe>
+                                </div>
+                            <?php endif; ?>
+                        <?php else : ?>
+                            <div class="no-iframe-message">
+                                <p>ยังไม่มีข้อมูล</p>
+                                <p class="small-text">ตั้งค่า URL ใน Customizer → [Green Library] Map & Info</p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 <?php

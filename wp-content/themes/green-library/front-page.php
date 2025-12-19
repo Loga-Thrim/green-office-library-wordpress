@@ -35,52 +35,6 @@ get_header();
         </div>
     </section>
     
-    <!-- Green Office Results Section -->
-    <section class="green-results-section">
-        <div class="section-header-with-icon">
-            <div class="section-icon">🍃</div>
-            <h2 class="section-title-blue">ผลการดำเนินงาน Green Office</h2>
-        </div>
-        
-        <div class="results-grid">
-            <?php
-            // Find the latest year page using the category template
-            $year_pages = get_posts( array(
-                'post_type'      => 'page',
-                'posts_per_page' => 1,
-                'meta_key'       => '_wp_page_template',
-                'meta_value'     => 'page-green-office-category.php',
-                'post_status'    => 'publish',
-                'orderby'        => 'title',
-                'order'          => 'DESC', // Latest year first (e.g., 2568 before 2567)
-            ) );
-            
-            $base_url = '';
-            if ( ! empty( $year_pages ) ) {
-                $base_url = get_permalink( $year_pages[0]->ID );
-            }
-            
-            for ($i = 1; $i <= 7; $i++) :
-                $result_icon = '📊';
-                $result_title = "หมวดที่ {$i}";
-                
-                // Use the latest year page URL with category parameter
-                if ( $base_url ) {
-                    $result_link = add_query_arg( 'category', $i, $base_url );
-                } else {
-                    // Fallback if no year page exists
-                    $result_link = home_url( "/green-office/" );
-                }
-            ?>
-                <a href="<?php echo esc_url($result_link); ?>" class="result-card">
-                    <div class="result-icon"><?php echo $result_icon; ?></div>
-                    <h3 class="result-title"><?php echo esc_html($result_title); ?></h3>
-                </a>
-            <?php
-            endfor;
-            ?>
-        </div>
-    </section>
     
     <!-- Statistics/Graph Section -->
     <section class="green-office-statistics">
