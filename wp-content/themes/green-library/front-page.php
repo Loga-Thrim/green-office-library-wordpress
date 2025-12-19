@@ -127,18 +127,20 @@ get_header();
     <!-- Latest Posts Section -->
     <?php
     // Get graph category ID to exclude
-    $stats_cat = get_category_by_slug( 'graph' );
-    $stats_cat_th = get_category_by_slug( 'กราฟ' );
+    $graph_cat = get_category_by_slug( 'graph' );
+    $graph_cat_th = get_category_by_slug( 'กราฟ' );
     $exclude_cats = array();
-    if ( $stats_cat ) $exclude_cats[] = $stats_cat->term_id;
-    if ( $stats_cat_th ) $exclude_cats[] = $stats_cat_th->term_id;
+    if ( $graph_cat ) $exclude_cats[] = $graph_cat->term_id;
+    if ( $graph_cat_th ) $exclude_cats[] = $graph_cat_th->term_id;
     
+    // Query posts from 'main' category, excluding 'graph'
     $latest_posts = new WP_Query( array(
-        'post_type'           => 'post',
-        'posts_per_page'      => 6,
-        'orderby'             => 'date',
-        'order'               => 'DESC',
-        'category__not_in'    => $exclude_cats,
+        'post_type'        => 'post',
+        'posts_per_page'   => 6,
+        'orderby'          => 'date',
+        'order'            => 'DESC',
+        'category_name'    => 'main',
+        'category__not_in' => $exclude_cats,
     ) );
     
     if ( $latest_posts->have_posts() ) :

@@ -264,7 +264,96 @@ function green_library_customize_register( $wp_customize ) {
     // GREEN LIBRARY (/green-library) Settings - Priority 40-49
     // ==========================================
     
-    // (Green Library settings will be added here when needed)
+    // Green Library Carousel Section
+    $wp_customize->add_section( 'green_library_carousel', array(
+        'title'    => __( '[Green Library] Carousel', 'green-library' ),
+        'priority' => 41,
+    ) );
+    
+    // Green Library Carousel Images (up to 5 slides)
+    for ( $i = 1; $i <= 5; $i++ ) {
+        // Image setting
+        $wp_customize->add_setting( "green_library_carousel_{$i}_image", array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ) );
+        
+        $wp_customize->add_control( new WP_Customize_Image_Control(
+            $wp_customize,
+            "green_library_carousel_{$i}_image",
+            array(
+                'label'    => sprintf( __( 'Slide %d Image', 'green-library' ), $i ),
+                'section'  => 'green_library_carousel',
+                'settings' => "green_library_carousel_{$i}_image",
+            )
+        ) );
+        
+        // Link setting
+        $wp_customize->add_setting( "green_library_carousel_{$i}_link", array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+        ) );
+        
+        $wp_customize->add_control( "green_library_carousel_{$i}_link", array(
+            'label'    => sprintf( __( 'Slide %d Link (Optional)', 'green-library' ), $i ),
+            'section'  => 'green_library_carousel',
+            'settings' => "green_library_carousel_{$i}_link",
+            'type'     => 'url',
+        ) );
+    }
+    
+    // Green Library Results - Dynamic Years from Pages
+    $gl_results_pages = get_posts( array(
+        'post_type'      => 'page',
+        'posts_per_page' => -1,
+        'meta_key'       => '_wp_page_template',
+        'meta_value'     => 'page-green-library-category.php',
+        'post_status'    => 'publish',
+    ) );
+    
+    // Extract years from page titles
+    $gl_years = array();
+    if ( ! empty( $gl_results_pages ) ) {
+        foreach ( $gl_results_pages as $page ) {
+            preg_match( '/(\d{4})/', $page->post_title, $matches );
+            if ( isset( $matches[1] ) ) {
+                $gl_years[] = intval( $matches[1] );
+            }
+        }
+    }
+    
+    // Sort and remove duplicates
+    $gl_years = array_unique( $gl_years );
+    sort( $gl_years );
+    
+    $gl_priority = 42;
+    
+    foreach ( $gl_years as $gl_year ) {
+        // Create section for each year
+        $wp_customize->add_section( "green_library_year_{$gl_year}", array(
+            'title'       => sprintf( __( '[Green Library] ผลการดำเนินงาน ปี %d', 'green-library' ), $gl_year ),
+            'priority'    => $gl_priority,
+            'description' => sprintf( __( 'เนื้อหาหมวด 1-9 สำหรับปี %d', 'green-library' ), $gl_year ),
+        ) );
+        $gl_priority++;
+        
+        // Create 9 category settings for each year
+        for ( $i = 1; $i <= 9; $i++ ) {
+            $setting_key = "green_library_year_{$gl_year}_category_{$i}_content";
+            
+            $wp_customize->add_setting( $setting_key, array(
+                'default'           => '',
+                'sanitize_callback' => 'wp_kses_post',
+            ) );
+            
+            $wp_customize->add_control( $setting_key, array(
+                'label'       => sprintf( __( 'หมวดที่ %d - HTML Content', 'green-library' ), $i ),
+                'description' => __( 'Enter HTML content for this category', 'green-library' ),
+                'section'     => "green_library_year_{$gl_year}",
+                'type'        => 'textarea',
+            ) );
+        }
+    }
     
     // ==========================================
     // GREEN OFFICE (/green-office) Settings - Priority 50+

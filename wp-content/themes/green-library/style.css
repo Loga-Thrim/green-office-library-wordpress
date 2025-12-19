@@ -1033,6 +1033,63 @@ a:hover {
 
 .green-library-sub-menu li {
     margin: 0;
+    position: relative;
+}
+
+/* Dropdown Sub-menu */
+.green-library-sub-menu .sub-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--white);
+    min-width: 180px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: 0.5rem 0;
+    margin: 0;
+    list-style: none;
+}
+
+.green-library-sub-menu .menu-item-has-children:hover > .sub-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.green-library-sub-menu .sub-menu li {
+    display: block;
+    width: 100%;
+    position: static;
+}
+
+.green-library-sub-menu .sub-menu li a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    border-radius: 0;
+    border-bottom: 1px solid #f0f0f0;
+    white-space: nowrap;
+}
+
+.green-library-sub-menu .sub-menu li:last-child a {
+    border-bottom: none;
+}
+
+.green-library-sub-menu .sub-menu li a:hover {
+    background-color: var(--primary-green);
+    color: var(--white);
+}
+
+body.green-library-sub-body .green-library-sub-menu .sub-menu li.current-menu-item a,
+body.green-library-sub-body .green-library-sub-menu .sub-menu li.current_page_item a {
+    background-color: #4a7c59 !important;
+    color: #ffffff !important;
 }
 
 .green-library-sub-menu a {
@@ -1051,8 +1108,13 @@ a:hover {
     color: var(--primary-green);
 }
 
-.green-library-sub-menu .current-menu-item a,
-.green-library-sub-menu .current_page_item a {
+.green-library-sub-menu .current-menu-item > a,
+.green-library-sub-menu .current_page_item > a {
+    background-color: var(--primary-green);
+    color: var(--white);
+}
+
+.green-library-sub-menu .current-menu-ancestor > a {
     background-color: var(--primary-green);
     color: var(--white);
 }
@@ -2006,6 +2068,530 @@ a:hover {
     font-size: 0.9rem;
 }
 
+/* 9 Categories Grid for Green Library */
+.results-grid-9 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.category-tabs-9 {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category-tabs-9 .category-tab {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   Green Library - Unique Design
+   ========================================== */
+
+/* Green Library Hero - Modern Design */
+.gl-page-hero {
+    position: relative;
+    padding: 1.5rem 2rem 3rem;
+    text-align: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #2d8a4e 0%, #38a169 40%, #48bb78 100%);
+}
+
+/* Floating Particles */
+.gl-hero-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.gl-particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    animation: particleFloat 15s infinite ease-in-out;
+}
+
+.gl-particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; width: 8px; height: 8px; }
+.gl-particle:nth-child(2) { left: 30%; top: 60%; animation-delay: 2s; width: 12px; height: 12px; }
+.gl-particle:nth-child(3) { left: 60%; top: 30%; animation-delay: 4s; width: 6px; height: 6px; }
+.gl-particle:nth-child(4) { left: 80%; top: 70%; animation-delay: 6s; width: 14px; height: 14px; }
+.gl-particle:nth-child(5) { left: 50%; top: 80%; animation-delay: 8s; width: 10px; height: 10px; }
+
+@keyframes particleFloat {
+    0%, 100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.5; }
+    25% { transform: translateY(-30px) translateX(20px) scale(1.2); opacity: 0.8; }
+    50% { transform: translateY(-60px) translateX(-10px) scale(0.8); opacity: 0.6; }
+    75% { transform: translateY(-30px) translateX(-20px) scale(1.1); opacity: 0.7; }
+}
+
+.gl-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.gl-hero-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    margin-bottom: 0.75rem;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.gl-hero-main-icon {
+    font-size: 1.6rem;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,255,255,0.3); }
+    50% { transform: scale(1.05); box-shadow: 0 0 30px 10px rgba(255,255,255,0.1); }
+}
+
+.gl-hero-title {
+    color: var(--white);
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0 0 0.25rem;
+    line-height: 1.2;
+}
+
+.gl-highlight {
+    background: linear-gradient(135deg, #7bed9f, #2ed573);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gl-hero-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+    letter-spacing: 0.3em;
+}
+
+.gl-hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.gl-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    background: rgba(255, 255, 255, 0.25);
+    color: #fff;
+    padding: 0.3rem 0.7rem;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    transition: all 0.3s ease;
+}
+
+.gl-tag:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Wave Bottom */
+.gl-hero-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    color: var(--pale-green);
+    z-index: 1;
+}
+
+.gl-hero-wave svg {
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .gl-page-hero {
+        padding: 1.5rem 1rem 3rem;
+    }
+    
+    .gl-hero-icon-wrap {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .gl-hero-main-icon {
+        font-size: 1.3rem;
+    }
+    
+    .gl-hero-title {
+        font-size: 1.6rem;
+    }
+    
+    .gl-hero-subtitle {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+    }
+    
+    .gl-tag {
+        font-size: 0.6rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .gl-hero-wave {
+        height: 35px;
+    }
+}
+
+/* Thumbnail Gallery Carousel */
+.gl-carousel-section {
+    padding: 2rem;
+    background: var(--pale-green);
+}
+
+.gl-carousel-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.gl-main-slide {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    margin-bottom: 1rem;
+}
+
+.gl-main-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.gl-main-image img,
+img.gl-main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gl-main-image.active {
+    opacity: 1;
+}
+
+.gl-thumbnail-strip {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.gl-thumbnail {
+    width: 80px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    background: none;
+}
+
+.gl-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gl-thumbnail:hover {
+    border-color: var(--light-green);
+    transform: translateY(-3px);
+}
+
+.gl-thumbnail.active {
+    border-color: var(--primary-green);
+    box-shadow: 0 4px 15px rgba(74, 124, 89, 0.3);
+}
+
+/* Magazine Style News Section */
+.gl-news-section {
+    padding: 4rem 2rem;
+    background: var(--white);
+}
+
+.gl-news-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gl-news-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.gl-news-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.75rem;
+    color: var(--dark-green);
+    margin-bottom: 1rem;
+}
+
+.gl-news-icon {
+    font-size: 2rem;
+}
+
+.gl-news-line {
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+.gl-news-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+}
+
+.gl-news-card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.gl-news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Featured (first) card spans 2 rows */
+.gl-news-featured {
+    grid-row: span 2;
+}
+
+.gl-news-featured .gl-news-image {
+    height: 300px;
+}
+
+.gl-news-image {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.gl-news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gl-news-card:hover .gl-news-image img {
+    transform: scale(1.05);
+}
+
+.gl-news-date-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--primary-green);
+    color: var(--white);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.gl-news-content {
+    padding: 1.25rem;
+}
+
+.gl-news-card-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.gl-news-card-title a {
+    color: var(--text-dark);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.gl-news-card-title a:hover {
+    color: var(--primary-green);
+}
+
+.gl-news-featured .gl-news-card-title {
+    font-size: 1.4rem;
+}
+
+.gl-news-excerpt {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.gl-news-readmore {
+    display: inline-block;
+    color: var(--primary-green);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.gl-news-readmore:hover {
+    color: var(--dark-green);
+    transform: translateX(5px);
+}
+
+/* Green Library Category Page */
+.green-library-category-page .category-tabs-section {
+    background: var(--white);
+    padding: 1rem;
+    border-bottom: 2px solid var(--pale-green);
+    position: sticky;
+    top: 60px;
+    z-index: 50;
+}
+
+.green-library-category-page .category-tabs-9 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.green-library-category-page .category-tab {
+    background: var(--pale-green);
+    color: var(--primary-green);
+    border: 2px solid transparent;
+    border-radius: 25px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.green-library-category-page .category-tab:hover {
+    background: var(--light-green);
+    color: var(--white);
+}
+
+.green-library-category-page .category-tab.active {
+    background: var(--primary-green);
+    color: var(--white);
+    border-color: var(--dark-green);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .gl-news-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .gl-news-featured {
+        grid-row: span 1;
+    }
+    
+    .gl-news-featured .gl-news-image {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .gl-main-slide {
+        height: 300px;
+    }
+    
+    .gl-thumbnail {
+        width: 60px;
+        height: 45px;
+    }
+    
+    .gl-news-section {
+        padding: 3rem 1rem;
+    }
+    
+    .gl-news-title {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .gl-main-slide {
+        height: 220px;
+    }
+    
+    .gl-thumbnail {
+        width: 50px;
+        height: 38px;
+    }
+    
+    .gl-carousel-section {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .results-grid-9 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .category-tabs-9 .category-tab {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .results-grid-9 {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+    
+    .results-grid-9 .result-card {
+        padding: 0.75rem;
+    }
+    
+    .results-grid-9 .result-icon {
+        font-size: 1.5rem;
+    }
+    
+    .results-grid-9 .result-title {
+        font-size: 0.75rem;
+    }
+}
+
 /* ==========================================
    Statistics/Graph Section
    ========================================== */
@@ -2259,4 +2845,15 @@ a:hover {
     .category-title {
         font-size: 1.2rem;
     }
+}
+
+/* Sub-menu Active State - MUST BE AT END */
+.green-library-sub-menu .sub-menu .current-menu-item > a,
+.green-library-sub-menu .sub-menu .current_page_item > a,
+.green-office-menu .sub-menu .current-menu-item > a,
+.green-office-menu .sub-menu .current_page_item > a,
+.green-office-menu .sub-menu li.current-menu-item a,
+.green-office-menu .sub-menu li.current_page_item a {
+    background-color: #4a7c59 !important;
+    color: #ffffff !important;
 }

@@ -129,43 +129,46 @@ get_header('green-office');
 
     <section class="green-office-activities">
         <div class="section-container">
-            <h2 class="section-title">กิจกรรมล่าสุด</h2>
+            <h2 class="section-title">ข่าวสารและกิจกรรม</h2>
             <div class="activities-grid">
-                <div class="activity-card">
-                    <div class="activity-image">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/activity-1.jpg" alt="กิจกรรม" onerror="this.src='https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&h=400&fit=crop'">
-                    </div>
-                    <div class="activity-content">
-                        <span class="activity-date">15 พ.ย. 2567</span>
-                        <h3>รณรงค์ลดใช้พลาสติก</h3>
-                        <p>โครงการส่งเสริมการใช้ถุงผ้าและบรรจุภัณฑ์ที่เป็นมิตรกับสิ่งแวดล้อม</p>
-                        <a href="#" class="activity-link">อ่านเพิ่มเติม →</a>
-                    </div>
-                </div>
+                <?php
+                // Query posts from 'green-office' category
+                $go_posts = new WP_Query( array(
+                    'post_type'      => 'post',
+                    'posts_per_page' => 3,
+                    'orderby'        => 'date',
+                    'order'          => 'DESC',
+                    'category_name'  => 'green-office',
+                ) );
                 
-                <div class="activity-card">
-                    <div class="activity-image">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/activity-2.jpg" alt="กิจกรรม" onerror="this.src='https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop'">
+                if ( $go_posts->have_posts() ) :
+                    while ( $go_posts->have_posts() ) : $go_posts->the_post();
+                ?>
+                    <div class="activity-card">
+                        <?php if ( has_post_thumbnail() ) : ?>
+                            <div class="activity-image">
+                                <a href="<?php the_permalink(); ?>">
+                                    <?php the_post_thumbnail( 'medium' ); ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
+                        <div class="activity-content">
+                            <span class="activity-date"><?php echo get_the_date( 'j M Y' ); ?></span>
+                            <h3><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                            <p><?php echo wp_trim_words( get_the_excerpt(), 20 ); ?></p>
+                            <a href="<?php the_permalink(); ?>" class="activity-link">อ่านเพิ่มเติม →</a>
+                        </div>
                     </div>
-                    <div class="activity-content">
-                        <span class="activity-date">8 พ.ย. 2567</span>
-                        <h3>ปลูกต้นไม้ในสำนักงาน</h3>
-                        <p>กิจกรรมเพิ่มพื้นที่สีเขียวและคุณภาพอากาศภายในอาคาร</p>
-                        <a href="#" class="activity-link">อ่านเพิ่มเติม →</a>
+                <?php
+                    endwhile;
+                    wp_reset_postdata();
+                else :
+                ?>
+                    <div class="no-posts-message">
+                        <p>ยังไม่มีข่าวสาร</p>
+                        <p class="small-text">สร้างโพสต์ใหม่และเพิ่มในหมวดหมู่ "green-office"</p>
                     </div>
-                </div>
-                
-                <div class="activity-card">
-                    <div class="activity-image">
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/activity-3.jpg" alt="กิจกรรม" onerror="this.src='https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=600&h=400&fit=crop'">
-                    </div>
-                    <div class="activity-content">
-                        <span class="activity-date">1 พ.ย. 2567</span>
-                        <h3>อบรมการจัดการพลังงาน</h3>
-                        <p>สัมมนาเชิงปฏิบัติการเพื่อเพิ่มประสิทธิภาพการใช้พลังงาน</p>
-                        <a href="#" class="activity-link">อ่านเพิ่มเติม →</a>
-                    </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </section>
